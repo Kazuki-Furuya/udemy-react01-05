@@ -15,7 +15,23 @@ const onClickAdd = () => {
   const completeButton = document.createElement("button");
   completeButton.innerText = "complete";
   completeButton.addEventListener("click", () => {
-    alert("complete");
+    const addTarget = completeButton.parentNode;
+    // 未完了リストから削除
+    deleteFromIncompleteList(addTarget);
+
+    const text = addTarget.firstElementChild.innerText;
+
+    addTarget.textContent = null;
+    const li = document.createElement("li");
+    li.innerText = text;
+
+    const backButton = document.createElement("button");
+    backButton.innerText = "back";
+
+    addTarget.appendChild(li);
+    addTarget.appendChild(backButton);
+
+    document.getElementById("complete-list").appendChild(div);
   });
 
   const deleteButton = document.createElement("button");
@@ -23,8 +39,14 @@ const onClickAdd = () => {
   deleteButton.addEventListener("click", () => {
     // 押された削除ボタンのおやタグを未完了リストから削除
     const deleteTarget = deleteButton.parentNode;
-    console.log(deleteTarget);
-    document.getElementById("incomplete-list").removeChild(deleteTarget);
+    deleteFromIncompleteList(deleteTarget);
+    // document.getElementById("incomplete-list").removeChild(deleteTarget);
+  });
+
+  const backButton = document.createElement("button");
+  backButton.innerText = "back";
+  backButton.addEventListener("click", () => {
+    alert("back");
   });
 
   div.appendChild(li);
@@ -40,3 +62,7 @@ const onClickAdd = () => {
 document.getElementById("add-button").addEventListener("click", () => {
   onClickAdd();
 });
+
+const deleteFromIncompleteList = (target) => {
+  document.getElementById("incomplete-list").removeChild(target);
+};
